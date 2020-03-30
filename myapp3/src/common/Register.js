@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, TextInput, AsyncStorage, TouchableOpacity, ToastAndroid} from 'react-native';
+import {View, Text, Image, TextInput, AsyncStorage, TouchableOpacity, ToastAndroid, Alert} from 'react-native';
 import { Icon } from '@ant-design/react-native';
 import { Actions } from 'react-native-router-flux';
 import { myFetch } from '../utils';
@@ -25,7 +25,14 @@ export default class Register extends Component {
         }).then(res => {
           AsyncStorage.setItem('user',JSON.stringify(res.data))
             .then(()=> {
-              Actions.login();
+              if(res.data.tip == '1') {
+                Alert.alert('用户名不能为1111')
+                console.log(res.data)
+              } else if (res.data.tip == '0') {
+                Alert.alert('用户名不能为空')
+              } else {
+                Actions.login();
+              }              
             })
         })
       }

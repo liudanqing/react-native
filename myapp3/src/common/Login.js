@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput, AsyncStorage, TouchableOpacity, ToastAndroid, BackHandler, Animated, StyleSheet } from 'react-native';
+import {View, Text, TextInput, AsyncStorage, TouchableOpacity, ToastAndroid, BackHandler, Animated, Alert, StyleSheet } from 'react-native';
 import { Icon } from '@ant-design/react-native';
 import { Actions } from 'react-native-router-flux';
 import { myFetch } from '../utils';
@@ -28,8 +28,16 @@ export default class Login extends Component {
     }).then(res => {
       AsyncStorage.setItem('user',JSON.stringify(res.data))
         .then(()=> {
+          if(res.data.tip == '1') {
+            Alert.alert('用户名不能为1111')            
+            console.log(res.data)
+          } else if (res.data.tip == '0') {
+            Alert.alert('用户名不能为空')
+          } else {
+            this.setState({isloading:false})
+            Actions.home();            
+          } 
           this.setState({isloading:false})
-          Actions.home();
         })
     })
   }
@@ -100,9 +108,9 @@ export default class Login extends Component {
           this.state.isloading? 
             <View style={styles.containter}>
               <Animated.View style={[styles.innerBox,{opacity:this.state.opacity}]}>
-                  <View style={{flex:1,justifyContent:'center',alignItems:'center'}}><Text style={{color:'#fff',fontSize:20}}>登录中，请稍等</Text></View>
+        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}><Text style={{color:'#fff',fontSize:20}}>登录中，请稍等</Text></View>
               </Animated.View>
-          </View>
+            </View>
           :null
         }
       </View>

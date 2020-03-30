@@ -24,12 +24,13 @@ const App = () => {
 			}
 		})
 		AsyncStorage.getItem('user')
-		.then(res=>{
+		.then(res=>{			
 			let user = JSON.parse(res)
 			if(!user){
 				SplashScreen.hide();
 			}
 			if(user&&user.token){
+				setInstall(false);
 				setLogin(true);
 				SplashScreen.hide();
 			}

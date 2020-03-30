@@ -85,12 +85,10 @@ const goods = [
     }
 ]
 const options = {
-    title: 'Select Avatar',
-    customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
-    storageOptions: {
-        skipBackup: true,
-        path: 'images',
-    },
+    title: '选择列表',
+    cancelButtonTitle:'取消',
+    takePhotoButtonTitle:'拍照',
+    chooseFromLibraryButtonTitle:'从相册中选择'
 };
 export default class User extends Component {
     constructor() {
@@ -135,8 +133,14 @@ export default class User extends Component {
         });
     }
     out = () => {
-        AsyncStorage.clear();
-        Actions.login();
+        AsyncStorage.removeItem('user',(error)=>{
+            if (error) {
+            }else {
+                Actions.login();
+            }
+        })
+        // AsyncStorage.clear();
+        // Actions.login();
     }
     render() {
         return (
