@@ -73,10 +73,11 @@ export default class Publish extends Component {
                 <View>
                     {
                         this.state.data.map((item) => {
+                            let ran = Math.random();
                             if(item.title.length > 15) {
                                 item.title = item.title.slice(0,15) + '...'
                             }
-                            if(item.reply_count > 0) {
+                            if(ran > 0.5) {
                                 item.reply_count = '已回复';
                                 color = '#f23030'
                             } else {
